@@ -1,0 +1,50 @@
+<section class="intro confirmation">
+  <p class="badge">Complaint received</p>
+  <h1>{{complaint.subject}}</h1>
+  <p>Reference <strong class="mono">#{{complaint.id}}</strong> &middot; submitted {{formatDate complaint.submittedAt}}</p>
+  <p class="review-date">Expected review date: <strong>{{reviewDate complaint.submittedAt 3}}</strong>
+     <span class="hint">(3 business days from submission)</span></p>
+</section>
+
+<section class="card">
+  <h2>Customer</h2>
+  <dl>
+    <dt>Full name</dt><dd>{{complaint.fullName}}</dd>
+    <dt>Email</dt><dd>{{complaint.email}}</dd>
+    <dt>Phone</dt><dd>{{complaint.phone}}</dd>
+  </dl>
+</section>
+
+<section class="card">
+  <h2>Vehicle</h2>
+  <dl>
+    <dt>Make</dt><dd>{{complaint.vehicleMake}}</dd>
+    <dt>Model</dt><dd>{{complaint.vehicleModel}}</dd>
+    <dt>VIN</dt><dd class="mono">{{complaint.vin}}</dd>
+  </dl>
+</section>
+
+<section class="card">
+  <h2>Details</h2>
+  <p class="description">{{nl2br complaint.description}}</p>
+</section>
+
+<section class="card">
+  <h2>Uploaded photos</h2>
+  {{#if (gt complaint.images.length 0)}}
+    <ul class="thumbs">
+      {{#each complaint.images}}
+      <li>
+        <a href="{{this.url}}" target="_blank" rel="noopener">
+          <img src="{{this.url}}" alt="Uploaded photo: {{this.originalName}}">
+        </a>
+        <span>{{this.originalName}} ({{fileSize this.size}})</span>
+      </li>
+      {{/each}}
+    </ul>
+  {{else}}
+    <p class="hint">No photos were uploaded.</p>
+  {{/if}}
+</section>
+
+<p><a class="btn secondary" href="/">Submit another complaint</a></p>
